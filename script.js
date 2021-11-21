@@ -72,7 +72,7 @@ async function loadApiData() {
 
     //looping image and tag API
     await getImgData.forEach((eachImgData) => {
-      let objTagAndID = { id: eachImgData.id, tag: eachImgData.tags[0] };
+      let objTagAndID = { id: eachImgData.id, tag: eachImgData.tags };
       tagAndID.push(objTagAndID);
     });
 
@@ -96,17 +96,19 @@ async function loadApiData() {
 
       if (tagInput.length > 2) {
         let collectID = [];
+
         tagAndID.forEach((data) => {
-          if (data.tag == tagInput) {
+          if (data.tag.includes(tagInput)) {
             searchResult = 0;
-            let objTagAndID = { id: data.id, tag: data.tag };
+            let objTagAndID = { id: data.id, tag: tagInput };
             collectID.push(objTagAndID);
           } else {
             searchResult = 2;
           }
         });
-        if (collectID.length > 1) {
+        if (collectID.length > 0) {
           searchResult = 0;
+          // console.log(collectID)
           loadAllImg(collectID);
         } else {
           searchResult = 2;
@@ -157,15 +159,15 @@ async function loadApiData() {
 
         let collectID = [];
         tagAndID.forEach((data) => {
-          if (data.tag == tagInput) {
+          if (data.tag.includes(tagInput)) {
             searchResult = 0;
-            let objTagAndID = { id: data.id, tag: data.tag };
+            let objTagAndID = { id: data.id, tag: tagInput };
             collectID.push(objTagAndID);
           } else {
             searchResult = 2;
           }
         });
-        if (collectID.length > 1) {
+        if (collectID.length > 0) {
           searchResult = 0;
           loadAllImg(collectID);
         } else {
@@ -201,6 +203,7 @@ async function loadApiData() {
 }
 
 function loadAllImg(getImgIDData) {
+  // console.log(getImgIDData)
   headingText.innerHTML = "";
   getSearchDiv.appendChild(headingText);
 
