@@ -49,6 +49,8 @@ let getSearchText = document.getElementById("searchText");
 let getOutputDiv = document.getElementById("outputDiv");
 getOutputDiv.style.textAlign = "center";
 
+let headingText3 = document.createElement("h3");
+headingText3.style.margin = "0px";
 let headingText = document.createElement("h1");
 
 //Calling function to call api
@@ -83,6 +85,15 @@ async function loadApiData() {
       getSearchDiv.appendChild(headingText);
       tagInput = document.getElementById("searchText").value;
       tagInput = tagInput.toLowerCase();
+
+      var results = getTagsData.filter(function (value) {
+        return value.toLowerCase().indexOf(tagInput.toLowerCase()) >= 0;
+      });
+      // console.log(results);
+
+      headingText3.innerHTML = `Keyword suggestions: "${results}"`;
+      getSearchDiv.appendChild(headingText3);
+
       if (tagInput.length > 2) {
         let collectID = [];
         tagAndID.forEach((data) => {
@@ -113,15 +124,17 @@ async function loadApiData() {
 
       switch (searchResult) {
         case 0:
-          headingText.innerHTML = `Viewing cats with keyword ${tagInput}`;
+          headingText.innerHTML = `Viewing cats with keyword "${tagInput}"`;
           getSearchDiv.appendChild(headingText);
           break;
         case 1:
           headingText.innerHTML = `Minimum Keywords of 3 letters is required.`;
           getSearchDiv.appendChild(headingText);
+          headingText3.innerHTML = "";
+          getSearchDiv.appendChild(headingText3);
           break;
         case 2:
-          headingText.innerHTML = `No data found with keyword ${tagInput}`;
+          headingText.innerHTML = `No data found with keyword "${tagInput}"`;
           getSearchDiv.appendChild(headingText);
           break;
       }
@@ -132,7 +145,16 @@ async function loadApiData() {
       getSearchDiv.appendChild(headingText);
       tagInput = document.getElementById("searchText").value;
       tagInput = tagInput.toLowerCase();
+
       if (tagInput.length > 2) {
+        var results = getTagsData.filter(function (value) {
+          return value.toLowerCase().indexOf(tagInput.toLowerCase()) >= 0;
+        });
+        // console.log(results);
+
+        headingText3.innerHTML = `Keyword suggestions: "${results}"`;
+        getSearchDiv.appendChild(headingText3);
+
         let collectID = [];
         tagAndID.forEach((data) => {
           if (data.tag == tagInput) {
@@ -156,15 +178,17 @@ async function loadApiData() {
 
       switch (searchResult) {
         case 0:
-          headingText.innerHTML = `Viewing cats with keyword ${tagInput}`;
+          headingText.innerHTML = `Viewing cats with keyword "${tagInput}"`;
           getSearchDiv.appendChild(headingText);
           break;
         case 1:
           headingText.innerHTML = `Minimum Keywords of 3 letters is required.`;
           getSearchDiv.appendChild(headingText);
+          headingText3.innerHTML = "";
+          getSearchDiv.appendChild(headingText3);
           break;
         case 2:
-          headingText.innerHTML = `No data found with keyword ${tagInput}`;
+          headingText.innerHTML = `No data found with keyword "${tagInput}"`;
           getSearchDiv.appendChild(headingText);
           break;
       }
