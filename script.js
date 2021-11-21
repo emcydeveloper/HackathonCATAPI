@@ -74,6 +74,7 @@ async function loadApiData() {
     // Creating click event on sear`h button for the text entered on te`t box
     createBtn.addEventListener("click", () => {
       tagInput = document.getElementById("searchText").value;
+      tagInput = tagInput.toLowerCase();
       if (tagInput.length > 2) {
         let collectID = [];
         tagAndID.forEach((data) => {
@@ -95,6 +96,7 @@ async function loadApiData() {
 
     getSearchText.addEventListener("keyup", () => {
       tagInput = document.getElementById("searchText").value;
+      tagInput = tagInput.toLowerCase();
       if (tagInput.length > 2) {
         let collectID = [];
         tagAndID.forEach((data) => {
