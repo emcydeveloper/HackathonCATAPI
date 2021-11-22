@@ -1,6 +1,10 @@
+body{
+    background-color: #165C86;
+}
+
 .domImg:hover {
-    -ms-transform: scale(2); /* IE 9 */
-    -webkit-transform: scale(2); /* Safari 3-8 */
-    transform: scale(2);
-    cursor: pointer
-};
+  -ms-transform: scale(2); /* IE 9 */
+  -webkit-transform: scale(2); /* Safari 3-8 */
+  transform: scale(2);
+  cursor: pointer;
+}

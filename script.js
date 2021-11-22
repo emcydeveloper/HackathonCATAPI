@@ -24,6 +24,8 @@ let searchResult = 0;
 */
 
 let getMainContainer = document.getElementById("mainContainer");
+getMainContainer.style.color = "white";
+getMainContainer.style.fontFamily = "Georgia, serif";
 let getSearchDiv = document.getElementById("searchDiv");
 getSearchDiv.style.padding = "15px";
 getSearchDiv.style.textAlign = "center";
@@ -34,13 +36,23 @@ createTextBox.setAttribute("id", "searchText");
 createTextBox.style.padding = "5px";
 createTextBox.style.width = "30%";
 createTextBox.style.marginRight = "5px";
+createTextBox.style.borderRadius = "25px";
+createTextBox.style.fontFamily = "georgia";
+createTextBox.style.fontSize = "15px";
 getSearchDiv.appendChild(createTextBox);
 
 let createBtn = document.createElement("button");
 createBtn.setAttribute("id", "mySearchBtn");
 createBtn.style.padding = "5px";
+createBtn.style.borderRadius = "25px";
+createBtn.style.width = "100px";
+createBtn.style.fontSize = "18px";
 createBtn.innerHTML = "Search";
 getSearchDiv.appendChild(createBtn);
+
+let createSuggesDiv = document.createElement("div");
+createSuggesDiv.setAttribute("id", "output");
+getSearchDiv.appendChild(createSuggesDiv);
 
 let tagInput = "";
 tagInput = tagInput.toLowerCase();
@@ -49,9 +61,13 @@ let getSearchText = document.getElementById("searchText");
 let getOutputDiv = document.getElementById("outputDiv");
 getOutputDiv.style.textAlign = "center";
 
-let headingText3 = document.createElement("h3");
+let headingText3 = document.createElement("p");
 headingText3.style.margin = "0px";
+headingText3.style.padding = "5px";
+headingText3.style.color = "#EFDECD";
+headingText3.style.fontFamily = "cursive";
 let headingText = document.createElement("h1");
+headingText.style.color = "black";
 
 //Calling function to call api
 loadApiData();
@@ -59,7 +75,7 @@ loadApiData();
 //creating function to fetch tag and image API using async and await
 async function loadApiData() {
   try {
-    headingText.innerHTML = "Loading Images....";
+    headingText.innerHTML = "Fetching images....";
     getSearchDiv.appendChild(headingText);
 
     // Fetching tag API
@@ -75,7 +91,6 @@ async function loadApiData() {
       let objTagAndID = { id: eachImgData.id, tag: eachImgData.tags };
       tagAndID.push(objTagAndID);
     });
-
     // Loading all the images from API as default
     loadAllImg(tagAndID);
 
@@ -86,18 +101,27 @@ async function loadApiData() {
       tagInput = document.getElementById("searchText").value;
       tagInput = tagInput.toLowerCase();
 
-      var results = getTagsData.filter(function (value) {
-        return value.toLowerCase().indexOf(tagInput.toLowerCase()) >= 0;
-      });
-      // console.log(results);
-
-      headingText3.innerHTML = `Keyword suggestions: "${results}"`;
-      getSearchDiv.appendChild(headingText3);
-
+      //Condition to check if user input has more than 2 character
       if (tagInput.length > 2) {
         let collectID = [];
 
+        // Fetching all the tag names from API
+        let results = getTagsData.filter(function (value) {
+          return value.toLowerCase().indexOf(tagInput.toLowerCase()) >= 0;
+        });
+
+        //To populate all keyword suggestion when result array has specified length
+        if (results.length > 0) {
+          headingText3.innerHTML = `<h3 style="padding:1px; margin:0px; color:red">Suggested Keywords:</h3> "${results}"`;
+          getSearchDiv.appendChild(headingText3);
+        } else {
+          headingText3.innerHTML = `<h3 style="padding:1px; margin:0px; color:red">Try with different keywords with Cat activities</h3>`;
+          getSearchDiv.appendChild(headingText3);
+        }
+
+        //Pulling data one by one to look user input results
         tagAndID.forEach((data) => {
+          //Condition to check if user given valid tag name
           if (data.tag.includes(tagInput)) {
             searchResult = 0;
             let objTagAndID = { id: data.id, tag: tagInput };
@@ -106,9 +130,11 @@ async function loadApiData() {
             searchResult = 2;
           }
         });
+
+        //If user input is valid input loading images by passing the User input ID to load all images
         if (collectID.length > 0) {
           searchResult = 0;
-          // console.log(collectID)
+
           loadAllImg(collectID);
         } else {
           searchResult = 2;
@@ -124,6 +150,7 @@ async function loadApiData() {
 2 - No data found
 */
 
+      //Switch condition to print headers in Webpage
       switch (searchResult) {
         case 0:
           headingText.innerHTML = `Viewing cats with keyword "${tagInput}"`;
@@ -142,23 +169,43 @@ async function loadApiData() {
       }
     });
 
+    // Creating keyup event on textbox for the text entered
     getSearchText.addEventListener("keyup", () => {
+      createSuggesDiv.innerHTML = "";
+      getSearchDiv.appendChild(createSuggesDiv);
       headingText.innerHTML = "";
       getSearchDiv.appendChild(headingText);
       tagInput = document.getElementById("searchText").value;
       tagInput = tagInput.toLowerCase();
 
+      //Condition to check if user input has more than 2 character
       if (tagInput.length > 2) {
         var results = getTagsData.filter(function (value) {
           return value.toLowerCase().indexOf(tagInput.toLowerCase()) >= 0;
         });
-        // console.log(results);
+        if (results.length > 0) {
+          headingText3.innerHTML = `<h3 style="padding:1px; margin:0px; color:red">Suggested Keywords:</h3> "${results}"`;
+          getSearchDiv.appendChild(headingText3);
+        } else {
+          headingText3.innerHTML = `<h3 style="padding:1px; margin:0px; color:red">Try with different keywords with Cat activities</h3>`;
+          getSearchDiv.appendChild(headingText3);
+        }
 
-        headingText3.innerHTML = `Keyword suggestions: "${results}"`;
-        getSearchDiv.appendChild(headingText3);
+        // let res = "<ul>";
+        // results.forEach((e) => {
+        //   res += "<li>" + e + "</li>";
+        // });
+        // res += "</ul>";
+        // headingText3.innerHTML = res;
+        // getSearchDiv.appendChild(headingText3);
+        // createSuggesDiv.innerHTML = res;
+        // getSearchDiv.appendChild(createSuggesDiv);
 
         let collectID = [];
+
+        //Pulling data one by one to look user input results
         tagAndID.forEach((data) => {
+          //Condition to check if user given valid tag name
           if (data.tag.includes(tagInput)) {
             searchResult = 0;
             let objTagAndID = { id: data.id, tag: tagInput };
@@ -167,6 +214,8 @@ async function loadApiData() {
             searchResult = 2;
           }
         });
+
+        //If user input is valid input loading images by passing the User input ID to load all images
         if (collectID.length > 0) {
           searchResult = 0;
           loadAllImg(collectID);
@@ -178,6 +227,7 @@ async function loadApiData() {
         loadAllImg(tagAndID);
       }
 
+      //Switch condition to print headers in Webpage
       switch (searchResult) {
         case 0:
           headingText.innerHTML = `Viewing cats with keyword "${tagInput}"`;
@@ -202,9 +252,10 @@ async function loadApiData() {
   }
 }
 
+//Printing images on browser based on user input
 function loadAllImg(getImgIDData) {
   // console.log(getImgIDData)
-  headingText.innerHTML = "";
+  headingText.innerHTML = "Building images on your webpage!";
   getSearchDiv.appendChild(headingText);
 
   getOutputDiv.innerHTML = "";
@@ -217,10 +268,22 @@ function loadAllImg(getImgIDData) {
     createImgTag.setAttribute("class", "domImg");
     createImgTag.style.width = "200px";
     createImgTag.style.height = "200px";
+    createImgTag.style.padding = "5px";
+    createImgTag.style.borderRadius = "20px";
 
     let getCurrentImg = document.getElementById(getImgID);
 
     createImgTag.src = `https://cataas.com/cat/${getImgID}`;
     getOutputDiv.appendChild(createImgTag);
+    createImgTag.addEventListener("click",()=>loadSeperateImg(`https://cataas.com/cat/${getImgID}`))
   });
+  headingText.innerHTML = "";
+  getSearchDiv.appendChild(headingText);
+
+  
+}
+
+function loadSeperateImg(getid)
+{
+  alert(getid)
 }
