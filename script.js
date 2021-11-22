@@ -27,14 +27,14 @@ let getMainContainer = document.getElementById("mainContainer");
 getMainContainer.style.color = "white";
 getMainContainer.style.fontFamily = "Georgia, serif";
 let getSearchDiv = document.getElementById("searchDiv");
-getSearchDiv.style.padding = "15px";
+getSearchDiv.style.padding = "0px";
 getSearchDiv.style.textAlign = "center";
 
 let createTextBox = document.createElement("INPUT");
 createTextBox.setAttribute("type", "text");
 createTextBox.setAttribute("id", "searchText");
 createTextBox.style.padding = "5px";
-createTextBox.style.width = "30%";
+// createTextBox.style.width = "30%";
 createTextBox.style.marginRight = "5px";
 createTextBox.style.borderRadius = "25px";
 createTextBox.style.fontFamily = "georgia";
@@ -275,7 +275,7 @@ function loadAllImg(getImgIDData) {
 
     createImgTag.src = `https://cataas.com/cat/${getImgID}`;
     getOutputDiv.appendChild(createImgTag);
-    //createImgTag.addEventListener("click",()=>loadSeperateImg(`https://cataas.com/cat/${getImgID}`))
+    createImgTag.addEventListener("click",()=>loadSeperateImg(`https://cataas.com/cat/${getImgID}`))
   });
   headingText.innerHTML = "";
   getSearchDiv.appendChild(headingText);
