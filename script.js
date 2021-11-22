@@ -275,15 +275,44 @@ function loadAllImg(getImgIDData) {
 
     createImgTag.src = `https://cataas.com/cat/${getImgID}`;
     getOutputDiv.appendChild(createImgTag);
-    //createImgTag.addEventListener("click",()=>loadSeperateImg(`https://cataas.com/cat/${getImgID}`))
+    createImgTag.addEventListener("click", () =>
+      loadSeperateImg(`https://cataas.com/cat/${getImgID}`)
+    );
   });
   headingText.innerHTML = "";
   getSearchDiv.appendChild(headingText);
-
-  
 }
 
-function loadSeperateImg(getid)
-{
-  alert(getid)
+function loadSeperateImg(getLink) {
+  // getOutputDiv.style.display = "none";
+  // alert(getid);
+  let getImgDiv = document.getElementById("imgDiv");
+  let createImgTag = document.createElement("img");
+  createImgTag.setAttribute("id", "myImg");
+  createImgTag.src = getLink;
+  createImgTag.style.width = "100%";
+  createImgTag.style.maxWidth = "300px";
+  // createImgTag.style.height = "10%";
+  console.log(createImgTag);
+
+  getImgDiv.innerHTML = createImgTag;
+
+  var modal = document.getElementById("myModal");
+
+  // Get the image and insert it inside the modal
+  var img = document.getElementById("myImg");
+  var modalImg = document.getElementById("img01");
+  // var captionText = document.getElementById("caption");
+
+  modal.style.display = "block";
+  modalImg.src = getLink;
+  // captionText.innerHTML = this.alt;
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+    modal.style.display = "none";
+  };
 }
