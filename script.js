@@ -65,7 +65,7 @@ let headingText3 = document.createElement("p");
 headingText3.style.margin = "0px";
 headingText3.style.padding = "5px";
 headingText3.style.color = "#EFDECD";
-headingText3.style.fontFamily = "cursive";
+headingText3.style.fontFamily = "sans-serif";
 let headingText = document.createElement("h1");
 headingText.style.color = "black";
 
