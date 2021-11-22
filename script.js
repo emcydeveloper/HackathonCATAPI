@@ -275,7 +275,7 @@ function loadAllImg(getImgIDData) {
 
     createImgTag.src = `https://cataas.com/cat/${getImgID}`;
     getOutputDiv.appendChild(createImgTag);
-    createImgTag.addEventListener("click",()=>loadSeperateImg(`https://cataas.com/cat/${getImgID}`))
+    //createImgTag.addEventListener("click",()=>loadSeperateImg(`https://cataas.com/cat/${getImgID}`))
   });
   headingText.innerHTML = "";
   getSearchDiv.appendChild(headingText);
