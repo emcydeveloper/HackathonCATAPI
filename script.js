@@ -284,26 +284,12 @@ function loadAllImg(getImgIDData) {
 }
 
 function loadSeperateImg(getLink) {
-  // getOutputDiv.style.display = "none";
-  // alert(getid);
-  let getImgDiv = document.getElementById("imgDiv");
-  let createImgTag = document.createElement("img");
-  createImgTag.setAttribute("id", "myImg");
-  createImgTag.src = getLink;
-  createImgTag.style.width = "100%";
-  createImgTag.style.maxWidth = "300px";
-  // createImgTag.style.height = "10%";
-  console.log(createImgTag);
-
-  getImgDiv.innerHTML = createImgTag;
 
   var modal = document.getElementById("myModal");
 
   // Get the image and insert it inside the modal
-  var img = document.getElementById("myImg");
-  var modalImg = document.getElementById("img01");
-  // var captionText = document.getElementById("caption");
-
+  var modalImg = document.getElementById("modalImg");
+  
   modal.style.display = "block";
   modalImg.src = getLink;
   // captionText.innerHTML = this.alt;
